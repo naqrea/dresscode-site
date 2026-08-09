@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DRESSCODE
 
-## Getting Started
+Site vitrine et boutique de la maison de stylisme DRESSCODE (projet GTA RP).
+Next.js (App Router) + React + TypeScript + Tailwind CSS v4, déployable
+gratuitement sur Vercel, sans backend permanent.
 
-First, run the development server:
+## Démarrer en local
 
 ```bash
+npm install
+cp .env.example .env.local   # puis renseigner les valeurs (voir ci-dessous)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Le site est servi sur http://localhost:3000. Sans `AIRTABLE_TOKEN`, la
+boutique s'affiche avec un état "en préparation" plutôt que de planter.
+Sans webhook Discord, les formulaires renvoient une erreur explicite au lieu
+d'échouer silencieusement.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables d'environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Voir `.env.example`. À définir dans **Vercel → Project Settings →
+Environment Variables** en production (jamais commitées).
 
-## Learn More
+| Variable | Obligatoire | Description |
+| --- | --- | --- |
+| `AIRTABLE_BASE_ID` | non (valeur par défaut incluse) | Base Airtable `Tenues`. |
+| `AIRTABLE_TABLE_TENUES` | non (défaut `Tenues`) | Nom de la table. |
+| `AIRTABLE_TOKEN` | oui | Token Airtable (lecture seule recommandé). Jamais exposé au client. |
+| `DISCORD_WEBHOOK_URL` | oui | Webhook du salon des commandes. |
+| `DISCORD_WEBHOOK_URL_SHOOTING` | non | Webhook dédié aux demandes de shooting (sinon `DISCORD_WEBHOOK_URL`). |
+| `DISCORD_WEBHOOK_URL_RELOOKING` | non | Webhook dédié aux demandes de relooking (sinon `DISCORD_WEBHOOK_URL`). |
 
-To learn more about Next.js, take a look at the following resources:
+Aucun secret n'est jamais lu dans un composant `"use client"` : l'accès à
+Airtable (`src/lib/airtable.ts`) et à Discord (`src/lib/discord.ts`) est
+exclusivement fait depuis des Server Components et des Route Handlers
+(`src/app/api/*/route.ts`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture des données
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+Airtable (Tenues)
+   ↓ un seul fetch, côté serveur, mis en cache (30 min)
+src/lib/airtable.ts   → normalise les champs, exclut les références internes
+   ↓ props initiales
+src/components/boutique/BoutiqueClient.tsx
+   → recherche + filtres + tri, entièrement côté client (aucune requête
+     Airtable supplémentaire quand l'utilisateur filtre/recherche/ouvre
+     une fiche/ajoute au panier)
+```
 
-## Deploy on Vercel
+- Les champs internes (`reference_*`, `total_commandes`, `id_employe`…) ne
+  sont ni demandés à Airtable, ni exposés au navigateur : seul le sous-
+  ensemble nécessaire à la boutique est requêté (`fields[]` dans l'appel
+  Airtable) puis transformé dans `Tenue` (`src/types/tenue.ts`).
+- Le panier vit en `localStorage` (`src/components/cart/CartProvider.tsx`) :
+  aucun compte utilisateur, aucun état serveur.
+- Les commandes/réservations sont transmises à Discord via des Route
+  Handlers (`/api/order`, `/api/shooting`, `/api/relooking`) qui gardent le
+  webhook côté serveur et valident les champs avant envoi.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Galerie
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Aucune table Airtable n'a été fournie pour les shootings publiés : la
+galerie lit un fichier statique éditable, `src/lib/galerie-data.ts` (le
+format et un exemple y sont documentés). Tant qu'aucun shooting n'y est
+ajouté, la page affiche un état "à venir" plutôt qu'un contenu inventé.
+
+## Notes de build (Next.js 16)
+
+Ce projet a été scaffoldé avec Next.js 16. Les images provenant d'Airtable
+(URLs arbitraires saisies par les stylistes) sont servies via `next/image`
+en mode `unoptimized` plutôt que via `images.remotePatterns`, puisque leur
+nom d'hôte n'est pas connu à l'avance. Les images locales (logo, galerie)
+bénéficient de l'optimisation standard de Next.js.
+
+## Scripts
+
+```bash
+npm run dev     # serveur de développement
+npm run build   # build de production (régénère aussi les types de route)
+npm run start   # sert le build de production
+npm run lint    # ESLint
+```
+
+## Dossier `_reference/`
+
+Contient les documents fournis pour le projet (brief, structure Airtable,
+logos sources). Ce dossier n'est pas utilisé par l'application — les
+logos exploités par le site vivent dans `public/`.

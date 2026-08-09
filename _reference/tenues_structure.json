@@ -1,0 +1,342 @@
+﻿{
+    "id":  "tbl8CNt8vMdB6NXbr",
+    "name":  "Tenues",
+    "primaryFieldId":  "fld3wAauKZC1BLMTl",
+    "fields":  [
+                   {
+                       "type":  "autoNumber",
+                       "id":  "fld3wAauKZC1BLMTl",
+                       "name":  "id_tenue"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldporXJsyZxnPG2I",
+                       "name":  "nom_tenue"
+                   },
+                   {
+                       "type":  "multipleSelects",
+                       "options":  {
+                                       "choices":  [
+                                                       {
+                                                           "id":  "sellxfvSGHnM4GqPa",
+                                                           "name":  "🤍 Blanc;🖤 Noir",
+                                                           "color":  "blueLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selqlapffvPRv4EUI",
+                                                           "name":  "🤍 Blanc",
+                                                           "color":  "cyanLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selYGsVHJLNONb9mV",
+                                                           "name":  "Noir",
+                                                           "color":  "tealLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selUShFDXGjOPwGDG",
+                                                           "name":  "Blanc",
+                                                           "color":  "blueLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selJsS3CWbynCRGMF",
+                                                           "name":  "Beige",
+                                                           "color":  "blueLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selCAxsFra4na6TmT",
+                                                           "name":  "Vert",
+                                                           "color":  "blueLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selgwui9QjkspBFcS",
+                                                           "name":  "Orange",
+                                                           "color":  "blueLight2"
+                                                       },
+                                                       {
+                                                           "id":  "selOevej4k2ZBiavg",
+                                                           "name":  "Gris",
+                                                           "color":  "blueLight2"
+                                                       }
+                                                   ]
+                                   },
+                       "id":  "flduuhnNA6NsXQokN",
+                       "name":  "couleur"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fld3OfqaU4ashI1Ky",
+                       "name":  "sexe"
+                   },
+                   {
+                       "type":  "url",
+                       "id":  "fldlM8kAvl8Kn2zvt",
+                       "name":  "photo_tenue"
+                   },
+                   {
+                       "type":  "url",
+                       "id":  "flddNftGbceaAot74",
+                       "name":  "croquis_tenue"
+                   },
+                   {
+                       "type":  "multipleRecordLinks",
+                       "options":  {
+                                       "linkedTableId":  "tbl8EIBchGxRDsJnO",
+                                       "isReversed":  false,
+                                       "prefersSingleRecordLink":  false,
+                                       "inverseLinkFieldId":  "fldvzXEDRyetBlqRC"
+                                   },
+                       "id":  "fldZaDEYZE4C0uXDl",
+                       "name":  "nom_styliste"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldZaDEYZE4C0uXDl",
+                                       "fieldIdInLinkedTable":  "flddGOAbU99vsIa4S",
+                                       "result":  {
+                                                      "type":  "number",
+                                                      "options":  {
+                                                                      "precision":  0
+                                                                  }
+                                                  }
+                                   },
+                       "id":  "fldB5g8C1XchskORb",
+                       "name":  "id_employe (from nom_styliste)"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldZaDEYZE4C0uXDl",
+                                       "fieldIdInLinkedTable":  "fldq7T2zsIYtFqBWK",
+                                       "result":  {
+                                                      "type":  "singleLineText"
+                                                  }
+                                   },
+                       "id":  "fld3qM2uB4wuJzlnD",
+                       "name":  "nom (from nom_styliste)"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldZaDEYZE4C0uXDl",
+                                       "fieldIdInLinkedTable":  "fldyTNAIMY5B7Sgde",
+                                       "result":  {
+                                                      "type":  "singleLineText"
+                                                  }
+                                   },
+                       "id":  "fldvMkIzgMUXnXbTy",
+                       "name":  "fonction (from nom_styliste)"
+                   },
+                   {
+                       "type":  "multipleRecordLinks",
+                       "options":  {
+                                       "linkedTableId":  "tbl8EIBchGxRDsJnO",
+                                       "isReversed":  false,
+                                       "prefersSingleRecordLink":  false,
+                                       "inverseLinkFieldId":  "fldthMsIotOmOAHJj"
+                                   },
+                       "id":  "fldWNKwgdGKOwjY4l",
+                       "name":  "nom_mannequin"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldWNKwgdGKOwjY4l",
+                                       "fieldIdInLinkedTable":  "flddGOAbU99vsIa4S",
+                                       "result":  {
+                                                      "type":  "number",
+                                                      "options":  {
+                                                                      "precision":  0
+                                                                  }
+                                                  }
+                                   },
+                       "id":  "fldeXl4GX9YTBttnV",
+                       "name":  "id_employe (from nom_mannequin)"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldWNKwgdGKOwjY4l",
+                                       "fieldIdInLinkedTable":  "fldq7T2zsIYtFqBWK",
+                                       "result":  {
+                                                      "type":  "singleLineText"
+                                                  }
+                                   },
+                       "id":  "fldDOBK7K7tb552VP",
+                       "name":  "nom (from nom_mannequin)"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldWNKwgdGKOwjY4l",
+                                       "fieldIdInLinkedTable":  "fldyTNAIMY5B7Sgde",
+                                       "result":  {
+                                                      "type":  "singleLineText"
+                                                  }
+                                   },
+                       "id":  "fldqW6Rzw4dDa28YF",
+                       "name":  "fonction (from nom_mannequin)"
+                   },
+                   {
+                       "type":  "multipleRecordLinks",
+                       "options":  {
+                                       "linkedTableId":  "tbl8EIBchGxRDsJnO",
+                                       "isReversed":  false,
+                                       "prefersSingleRecordLink":  false,
+                                       "inverseLinkFieldId":  "fld7bI4ZOZkzI07tX"
+                                   },
+                       "id":  "fldQVJWTCLcMm2hoA",
+                       "name":  "nom_photographe"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldQVJWTCLcMm2hoA",
+                                       "fieldIdInLinkedTable":  "flddGOAbU99vsIa4S",
+                                       "result":  {
+                                                      "type":  "number",
+                                                      "options":  {
+                                                                      "precision":  0
+                                                                  }
+                                                  }
+                                   },
+                       "id":  "fldqaSDTTxC1TD3WH",
+                       "name":  "id_employe (from nom_photographe)"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldQVJWTCLcMm2hoA",
+                                       "fieldIdInLinkedTable":  "fldq7T2zsIYtFqBWK",
+                                       "result":  {
+                                                      "type":  "singleLineText"
+                                                  }
+                                   },
+                       "id":  "fldRzlyd7DzIRf4Yq",
+                       "name":  "nom (from nom_photographe)"
+                   },
+                   {
+                       "type":  "multipleLookupValues",
+                       "options":  {
+                                       "isValid":  true,
+                                       "recordLinkFieldId":  "fldQVJWTCLcMm2hoA",
+                                       "fieldIdInLinkedTable":  "fldyTNAIMY5B7Sgde",
+                                       "result":  {
+                                                      "type":  "singleLineText"
+                                                  }
+                                   },
+                       "id":  "fldWJ8l8dRBDSk3pj",
+                       "name":  "fonction (from nom_photographe)"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fld0pMDg3wcYNu2SF",
+                       "name":  "collection"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldwrpTwjAk43tZfx",
+                       "name":  "tag"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldEd0qm4kn03MUXH",
+                       "name":  "total_commandes"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldgeYxcxyPhVDx5g",
+                       "name":  "prix"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldGnmKvGbmWnZ3nH",
+                       "name":  "statut"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fld2lQmYQ7dNmxy67",
+                       "name":  "reference_veste"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldIU9cY3o4FcCFkn",
+                       "name":  "reference_tshirt"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldVMliCBQR2UaSzP",
+                       "name":  "reference_manches"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fld9ivSjAiu0jecud",
+                       "name":  "reference_pantalon"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldAFcImTCjbJ38sb",
+                       "name":  "reference_chaussures"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldwXGN2r8Q2kEVui",
+                       "name":  "reference_accessoires"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldDTwQUBs35OXuL2",
+                       "name":  "reference_sac"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "flddndiaHOQkrx6JI",
+                       "name":  "reference_gilet"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldqaLpapitLDGegx",
+                       "name":  "reference_bracelet"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldXmZoPJzlrMs8om",
+                       "name":  "reference_collier"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldkSukPKCjzXgrZv",
+                       "name":  "reference_montre"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldkhuQLJdUQXFDJf",
+                       "name":  "reference_lunettes"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fldfNTZ3zTGvWKJPW",
+                       "name":  "reference_chapeau"
+                   },
+                   {
+                       "type":  "singleLineText",
+                       "id":  "fld5xdZvk7SaPudSZ",
+                       "name":  "reference_masque"
+                   }
+               ],
+    "views":  [
+                  {
+                      "id":  "viwiKrNrp0RHZGHkV",
+                      "name":  "Tenues",
+                      "type":  "grid"
+                  }
+              ]
+}
