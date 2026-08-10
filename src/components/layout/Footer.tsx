@@ -15,14 +15,16 @@ export function Footer() {
         <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
             <Logo />
-            <p className="mt-4 font-accent text-3xl text-dc-accent">Dresscode</p>
-            <p className="mt-2 text-sm leading-relaxed text-dc-white/60">
-              Maison de stylisme. Tenues sur-mesure, shootings et relookings pour
-              celles et ceux qui font de la mode une scène à part entière.
+            <p className="mt-4 text-sm leading-relaxed text-dc-white/60">
+              Maison de stylisme. Tenues sur-mesure, shootings et relookings
+              pour celles et ceux qui font de la mode une scène à part entière.
             </p>
           </div>
 
-          <nav aria-label="Navigation du pied de page" className="flex flex-col gap-3">
+          <nav
+            aria-label="Navigation du pied de page"
+            className="flex flex-col gap-3"
+          >
             <span className="font-sans text-xs uppercase tracking-widest text-dc-white/40">
               Explorer
             </span>
@@ -41,13 +43,18 @@ export function Footer() {
             <span className="font-sans text-xs uppercase tracking-widest text-dc-white/40">
               Contact
             </span>
-            <p className="text-sm text-dc-white/70">Sur rendez-vous, en ville.</p>
-            <p className="text-sm text-dc-white/70">Commandes via la boutique en ligne.</p>
+            <p className="text-sm text-dc-white/70">
+              Sur rendez-vous, en ville.
+            </p>
+            <p className="text-sm text-dc-white/70">
+              Commandes via la boutique en ligne.
+            </p>
           </div>
         </div>
 
         <div className="mt-10 border-t border-dc-white/10 pt-6 text-center text-xs text-dc-white/40">
-          © {new Date().getFullYear()} DRESSCODE — Projet de stylisme roleplay. Aucun paiement réel n&apos;est effectué sur ce site.
+          © {new Date().getFullYear()} DRESSCODE — Projet de stylisme roleplay.
+          Aucun paiement réel n&apos;est effectué sur ce site.
         </div>
       </div>
     </footer>

@@ -16,7 +16,7 @@ export function OutfitCard({ tenue, onSelect }: OutfitCardProps) {
       className="group flex flex-col text-left"
       aria-label={`Voir la tenue ${tenue.nom}`}
     >
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-dc-bg-light">
+      <div className="relative aspect-square w-full overflow-hidden bg-dc-bg-light">
         {tenue.image ? (
           <Image
             src={tenue.image}

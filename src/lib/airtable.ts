@@ -179,7 +179,9 @@ function toTenue(record: AirtableRecord): Tenue {
 
 export async function getTenues(): Promise<Tenue[]> {
   const records = await fetchAllRecords();
-  return records.map(toTenue);
+  return records
+    .map(toTenue)
+    .filter((tenue) => tenue.statut && normalizeForMatch(tenue.statut) === "en vente");
 }
 
 export function getFiltres(tenues: Tenue[]): TenueFiltres {

@@ -47,7 +47,7 @@ export function OutfitQuickView({ tenue, onClose }: OutfitQuickViewProps) {
         aria-modal="true"
         aria-label={tenue.nom}
         tabIndex={-1}
-        className="relative flex max-h-[92vh] w-full max-w-2xl flex-col overflow-y-auto bg-dc-bg sm:flex-row"
+        className="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-y-auto bg-dc-bg sm:flex-row"
       >
         <button
           type="button"
@@ -58,7 +58,7 @@ export function OutfitQuickView({ tenue, onClose }: OutfitQuickViewProps) {
           ×
         </button>
 
-        <div className="relative aspect-[4/5] w-full shrink-0 bg-dc-bg-light sm:aspect-auto sm:w-1/2">
+        <div className="relative aspect-square w-full shrink-0 bg-dc-bg-light sm:w-3/5">
           {tenue.image ? (
             <Image
               src={tenue.image}
