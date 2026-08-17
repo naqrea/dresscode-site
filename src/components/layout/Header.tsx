@@ -14,6 +14,12 @@ const NAV_LINKS = [
   { href: "/relooking", label: "Relooking" },
 ];
 
+const NAV_LEFT = NAV_LINKS.slice(0, 2);
+const NAV_RIGHT = NAV_LINKS.slice(2);
+
+const NAV_LINK_CLASS =
+  "font-sans text-sm uppercase tracking-wide text-dc-white/80 transition-colors hover:text-dc-accent";
+
 export function Header() {
   const pathname = usePathname();
   const { totalItems, openCart } = useCart();
@@ -26,61 +32,78 @@ export function Header() {
     };
   }, [isMenuOpen]);
 
+  const cartButton = (
+    <button
+      type="button"
+      onClick={openCart}
+      aria-label={`Panier, ${totalItems} article${totalItems > 1 ? "s" : ""}`}
+      className="relative flex h-11 w-11 items-center justify-center text-dc-white hover:text-dc-accent"
+    >
+      <CartIcon />
+      {totalItems > 0 && (
+        <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-dc-accent px-1 text-[10px] font-semibold text-dc-white">
+          {totalItems}
+        </span>
+      )}
+    </button>
+  );
+
   return (
     <header className="sticky top-0 z-40 border-b border-dc-white/10 bg-dc-bg/90 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-18 sm:px-6">
+      {/* Mobile / tablet bar: logo left, cart + menu right */}
+      <div className="flex h-16 items-center justify-between px-4 sm:h-18 sm:px-6 md:hidden">
         <Logo priority />
-
-        <nav
-          className="hidden items-center gap-8 md:flex"
-          aria-label="Navigation principale"
-        >
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "font-sans text-sm uppercase tracking-wide text-dc-white/80 transition-colors hover:text-dc-accent",
-                pathname === link.href && "text-dc-accent",
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={openCart}
-            aria-label={`Panier, ${totalItems} article${totalItems > 1 ? "s" : ""}`}
-            className="relative flex h-11 w-11 items-center justify-center text-dc-white hover:text-dc-accent"
-          >
-            <CartIcon />
-            {totalItems > 0 && (
-              <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-dc-accent px-1 text-[10px] font-semibold text-dc-white">
-                {totalItems}
-              </span>
-            )}
-          </button>
-
+          {cartButton}
           <button
             type="button"
             onClick={() => setIsMenuOpen((v) => !v)}
             aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isMenuOpen}
-            className="flex h-11 w-11 items-center justify-center text-dc-white hover:text-dc-accent md:hidden"
+            className="flex h-11 w-11 items-center justify-center text-dc-white hover:text-dc-accent"
           >
             {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
         </div>
       </div>
 
+      {/* Desktop bar: logo centered, two links either side */}
+      <div className="mx-auto hidden max-w-6xl items-center px-6 md:grid md:h-20 md:grid-cols-[1fr_auto_1fr]">
+        <nav className="flex items-center gap-8 justify-self-start" aria-label="Navigation principale">
+          {NAV_LEFT.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(NAV_LINK_CLASS, pathname === link.href && "text-dc-accent")}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <Logo priority className="justify-self-center" />
+
+        <div className="flex items-center gap-8 justify-self-end">
+          <nav className="flex items-center gap-8" aria-label="Navigation principale">
+            {NAV_RIGHT.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(NAV_LINK_CLASS, pathname === link.href && "text-dc-accent")}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          {cartButton}
+        </div>
+      </div>
+
       <div
         className={cn(
-          "fixed inset-x-0 top-16 z-30 overflow-y-auto border-t border-dc-white/10 bg-dc-bg transition-[height,opacity] duration-300 md:hidden",
+          "fixed inset-x-0 top-16 z-30 overflow-y-auto border-t border-dc-white/10 bg-dc-bg transition-[height,opacity] duration-300 sm:top-18 md:hidden",
           isMenuOpen
-            ? "h-[calc(100vh-4rem)] opacity-100"
+            ? "h-[calc(100vh-4rem)] opacity-100 sm:h-[calc(100vh-4.5rem)]"
             : "pointer-events-none h-0 opacity-0",
         )}
       >

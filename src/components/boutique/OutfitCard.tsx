@@ -6,9 +6,13 @@ import type { Tenue } from "@/types/tenue";
 interface OutfitCardProps {
   tenue: Tenue;
   onSelect: (tenue: Tenue) => void;
+  /** Preload the first visible rows instead of lazy-loading them. */
+  priority?: boolean;
+  /** Reports back once the image has loaded (or failed), for a loading veil. */
+  onImageSettled?: (id: string) => void;
 }
 
-export function OutfitCard({ tenue, onSelect }: OutfitCardProps) {
+export function OutfitCard({ tenue, onSelect, priority, onImageSettled }: OutfitCardProps) {
   return (
     <button
       type="button"
@@ -22,9 +26,11 @@ export function OutfitCard({ tenue, onSelect }: OutfitCardProps) {
             src={tenue.image}
             alt={tenue.nom}
             fill
-            unoptimized
+            priority={priority}
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
+            onLoad={() => onImageSettled?.(tenue.id)}
+            onError={() => onImageSettled?.(tenue.id)}
           />
         ) : (
           <div className="flex h-full items-center justify-center font-heading text-3xl text-dc-white/15">

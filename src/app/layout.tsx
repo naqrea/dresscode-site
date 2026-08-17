@@ -3,6 +3,7 @@ import { Allison, Baskervville, Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Preloader } from "@/components/layout/Preloader";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${baskervville.variable} ${inter.variable} ${allison.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-dc-bg font-sans text-dc-white antialiased">
+        <Preloader />
         <CartProvider>
           <a
             href="#contenu"

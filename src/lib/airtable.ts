@@ -1,4 +1,5 @@
 import type { Tenue, TenueFiltres } from "@/types/tenue";
+import { proxiedImageUrl } from "@/lib/image";
 
 /**
  * Server-only data layer for the `Tenues` Airtable table.
@@ -27,7 +28,6 @@ const FIELDS = [
   "nom_tenue",
   "couleur",
   "sexe",
-  "photo_tenue",
   "croquis_tenue",
   "collection",
   "tag",
@@ -152,10 +152,6 @@ function toTenue(record: AirtableRecord): Tenue {
     typeof f.croquis_tenue === "string" && f.croquis_tenue.trim()
       ? f.croquis_tenue.trim()
       : null;
-  const photo =
-    typeof f.photo_tenue === "string" && f.photo_tenue.trim()
-      ? f.photo_tenue.trim()
-      : null;
 
   return {
     id: record.id,
@@ -171,9 +167,8 @@ function toTenue(record: AirtableRecord): Tenue {
     sexe: typeof f.sexe === "string" && f.sexe.trim() ? f.sexe.trim() : null,
     statut: statutRaw,
     disponible,
-    // Stylist sketches take priority over studio photos when both exist (§6).
-    image: croquis ?? photo,
-    imageSecondaire: croquis ? photo : null,
+    // Routed through /api/img so next/image can actually optimize it.
+    image: croquis ? proxiedImageUrl(croquis) : null,
   };
 }
 

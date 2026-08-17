@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Tenue, TenueFiltres } from "@/types/tenue";
 import { SearchBar } from "./SearchBar";
 import { FiltersSheet, type SelectedFiltres } from "./FiltersSheet";
 import { OutfitGrid } from "./OutfitGrid";
 import { OutfitQuickView } from "./OutfitQuickView";
+import { RevealOverlay } from "@/components/layout/RevealOverlay";
 
 const EMPTY_SELECTION: SelectedFiltres = {
   collections: [],
@@ -13,6 +14,9 @@ const EMPTY_SELECTION: SelectedFiltres = {
   tags: [],
   sexes: [],
 };
+
+/** Never keep the catalogue hidden if an image request stalls. */
+const IMAGES_SAFETY_TIMEOUT_MS = 3500;
 
 function normalize(value: string): string {
   return value
@@ -32,6 +36,24 @@ export function BoutiqueClient({
   const [selected, setSelected] = useState<SelectedFiltres>(EMPTY_SELECTION);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [selectedTenue, setSelectedTenue] = useState<Tenue | null>(null);
+
+  // Reveal the catalogue only once its (initial, unfiltered) images have
+  // settled, so the grid doesn't pop in piecemeal on first arrival.
+  const [settledImageIds, setSettledImageIds] = useState<Set<string>>(new Set());
+  const [imagesTimedOut, setImagesTimedOut] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setImagesTimedOut(true), IMAGES_SAFETY_TIMEOUT_MS);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const handleImageSettled = useCallback((id: string) => {
+    setSettledImageIds((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
+  }, []);
+
+  const tenuesWithImage = useMemo(() => tenues.filter((t) => t.image), [tenues]);
+  const isReady =
+    imagesTimedOut || tenuesWithImage.every((tenue) => settledImageIds.has(tenue.id));
 
   const filteredTenues = useMemo(() => {
     const query = normalize(search.trim());
@@ -67,7 +89,9 @@ export function BoutiqueClient({
   }
 
   return (
-    <div>
+    <div className="relative">
+      <RevealOverlay isReady={isReady} variant="absolute" />
+
       <div className="flex gap-3">
         <SearchBar value={search} onChange={setSearch} />
         <button
@@ -90,7 +114,11 @@ export function BoutiqueClient({
       </p>
 
       <div className="mt-6">
-        <OutfitGrid tenues={filteredTenues} onSelect={setSelectedTenue} />
+        <OutfitGrid
+          tenues={filteredTenues}
+          onSelect={setSelectedTenue}
+          onImageSettled={handleImageSettled}
+        />
       </div>
 
       <FiltersSheet

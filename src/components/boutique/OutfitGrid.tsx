@@ -1,12 +1,16 @@
 import type { Tenue } from "@/types/tenue";
 import { OutfitCard } from "./OutfitCard";
 
+/** Roughly the first row on the widest grid breakpoint — worth preloading. */
+const PRIORITY_COUNT = 4;
+
 interface OutfitGridProps {
   tenues: Tenue[];
   onSelect: (tenue: Tenue) => void;
+  onImageSettled?: (id: string) => void;
 }
 
-export function OutfitGrid({ tenues, onSelect }: OutfitGridProps) {
+export function OutfitGrid({ tenues, onSelect, onImageSettled }: OutfitGridProps) {
   if (tenues.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 py-24 text-center">
@@ -21,8 +25,14 @@ export function OutfitGrid({ tenues, onSelect }: OutfitGridProps) {
 
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
-      {tenues.map((tenue) => (
-        <OutfitCard key={tenue.id} tenue={tenue} onSelect={onSelect} />
+      {tenues.map((tenue, index) => (
+        <OutfitCard
+          key={tenue.id}
+          tenue={tenue}
+          onSelect={onSelect}
+          priority={index < PRIORITY_COUNT}
+          onImageSettled={onImageSettled}
+        />
       ))}
     </div>
   );

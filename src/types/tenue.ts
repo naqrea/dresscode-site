@@ -16,9 +16,7 @@ export interface Tenue {
   sexe: string | null;
   statut: string | null;
   disponible: boolean;
-  /** Croquis is preferred over the studio photo when both are present. */
   image: string | null;
-  imageSecondaire: string | null;
 }
 
 export interface TenueFiltres {

@@ -15,7 +15,7 @@ export function CartItemRow({ item }: { item: CartItem }) {
             src={item.image}
             alt={item.nom}
             fill
-            unoptimized
+            sizes="64px"
             className="object-cover"
           />
         ) : (

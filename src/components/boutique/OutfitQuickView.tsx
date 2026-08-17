@@ -64,7 +64,6 @@ export function OutfitQuickView({ tenue, onClose }: OutfitQuickViewProps) {
               src={tenue.image}
               alt={tenue.nom}
               fill
-              unoptimized
               sizes="(min-width: 640px) 50vw, 100vw"
               className="object-cover"
             />
