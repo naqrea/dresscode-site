@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { cloudinaryAssetUrl } from "@/lib/image";
 import logoWhite from "../../../public/logo-white.png";
 
 /** Must match the transition duration below. */
@@ -53,8 +54,13 @@ export function RevealOverlay({ isReady, variant = "viewport" }: RevealOverlayPr
         } ${isReady ? "pointer-events-none opacity-0" : "opacity-100"}`}
       >
         <Image
-          src={logoWhite}
+          src={cloudinaryAssetUrl(
+            process.env.NEXT_PUBLIC_CLOUDINARY_LOGO_WHITE_PUBLIC_ID,
+            logoWhite.src
+          )}
           alt=""
+          width={210}
+          height={263}
           priority
           className="h-14 w-auto animate-fade-in sm:h-16"
         />

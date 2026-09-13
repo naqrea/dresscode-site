@@ -2,8 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // /api/img proxies Airtable-hosted photos (arbitrary hosts) so
-    // next/image can optimize them — see src/lib/image.ts.
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+    ],
     localPatterns: [{ pathname: "/api/img" }],
   },
 };

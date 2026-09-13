@@ -83,6 +83,11 @@ export function OutfitQuickView({ tenue, onClose }: OutfitQuickViewProps) {
           <h2 className="mt-1 font-heading text-2xl uppercase tracking-wide text-dc-white">
             {tenue.nom}
           </h2>
+          {tenue.nomStyliste && (
+            <p className="mt-2 font-sans text-sm text-dc-white/50">
+              Par {tenue.nomStyliste}
+            </p>
+          )}
           <p className="mt-2 font-sans text-lg text-dc-accent">
             {tenue.prixAffiche}
           </p>

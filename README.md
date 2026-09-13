@@ -27,6 +27,9 @@ Environment Variables** en production (jamais commitées).
 | `AIRTABLE_BASE_ID` | non (valeur par défaut incluse) | Base Airtable `Tenues`. |
 | `AIRTABLE_TABLE_TENUES` | non (défaut `Tenues`) | Nom de la table. |
 | `AIRTABLE_TOKEN` | oui | Token Airtable (lecture seule recommandé). Jamais exposé au client. |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | recommandé | Cloud name Cloudinary. Active l'optimisation `f_auto,q_auto` des URLs Airtable et de galerie. |
+| `NEXT_PUBLIC_CLOUDINARY_HERO_PUBLIC_ID` | non | Public ID Cloudinary du hero importé depuis `public/hero-image.png`. |
+| `NEXT_PUBLIC_CLOUDINARY_LOGO_WHITE_PUBLIC_ID` | non | Public ID Cloudinary du logo blanc importé depuis `public/logo-white.png`. |
 | `DISCORD_WEBHOOK_URL` | oui | Webhook du salon des commandes. |
 | `DISCORD_WEBHOOK_URL_SHOOTING` | non | Webhook dédié aux demandes de shooting (sinon `DISCORD_WEBHOOK_URL`). |
 | `DISCORD_WEBHOOK_URL_RELOOKING` | non | Webhook dédié aux demandes de relooking (sinon `DISCORD_WEBHOOK_URL`). |
@@ -66,13 +69,17 @@ galerie lit un fichier statique éditable, `src/lib/galerie-data.ts` (le
 format et un exemple y sont documentés). Tant qu'aucun shooting n'y est
 ajouté, la page affiche un état "à venir" plutôt qu'un contenu inventé.
 
-## Notes de build (Next.js 16)
+## Images et Cloudinary
 
-Ce projet a été scaffoldé avec Next.js 16. Les images provenant d'Airtable
-(URLs arbitraires saisies par les stylistes) sont servies via `next/image`
-en mode `unoptimized` plutôt que via `images.remotePatterns`, puisque leur
-nom d'hôte n'est pas connu à l'avance. Les images locales (logo, galerie)
-bénéficient de l'optimisation standard de Next.js.
+Les URLs distantes provenant d'Airtable et de la galerie passent par
+Cloudinary Fetch Delivery avec `f_auto,q_auto`, puis par `next/image`. Le
+fallback `/api/img` reste disponible si `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
+n'est pas défini.
+
+Pour optimiser aussi les assets statiques, importez `hero-image.png` et
+`logo-white.png` dans Cloudinary puis renseignez leurs public IDs dans les
+variables correspondantes. Sans ces IDs, le site conserve les fichiers de
+`public/` et fonctionne normalement.
 
 ## Scripts
 

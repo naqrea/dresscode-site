@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { PhotoShooting } from "@/types/galerie";
 import { cn } from "@/lib/cn";
+import { optimizedImageUrl } from "@/lib/image";
 
 const SPAN_PATTERN = ["col-span-2 row-span-2", "col-span-1 row-span-1", "col-span-1 row-span-1", "col-span-1 row-span-2", "col-span-1 row-span-1"];
 
@@ -34,7 +35,7 @@ export function ShootingSection({ shooting }: { shooting: PhotoShooting }) {
               )}
             >
               <Image
-                src={photo.src}
+                src={optimizedImageUrl(photo.src)}
                 alt={photo.alt}
                 fill
                 sizes="(min-width: 640px) 25vw, 50vw"

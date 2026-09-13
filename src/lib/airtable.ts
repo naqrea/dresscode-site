@@ -1,5 +1,5 @@
 import type { Tenue, TenueFiltres } from "@/types/tenue";
-import { proxiedImageUrl } from "@/lib/image";
+import { optimizedImageUrl } from "@/lib/image";
 
 /**
  * Server-only data layer for the `Tenues` Airtable table.
@@ -30,6 +30,7 @@ const FIELDS = [
   "sexe",
   "croquis_tenue",
   "collection",
+  "nom (from nom_styliste)",
   "tag",
   "prix",
   "statut",
@@ -116,6 +117,23 @@ function normalizeTags(raw: unknown): string[] {
     .filter(Boolean);
 }
 
+function normalizeNomStyliste(raw: unknown): string | null {
+  const values = Array.isArray(raw) ? raw : [raw];
+  const names = values
+    .flatMap((value) => {
+      if (typeof value === "string") return [value];
+      if (value && typeof value === "object" && "name" in value) {
+        const name = (value as { name?: unknown }).name;
+        return typeof name === "string" ? [name] : [];
+      }
+      return [];
+    })
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return names.length ? names.join(", ") : null;
+}
+
 function normalizePrix(raw: unknown): number | null {
   if (typeof raw === "number" && Number.isFinite(raw)) return raw;
   if (typeof raw !== "string") return null;
@@ -162,13 +180,13 @@ function toTenue(record: AirtableRecord): Tenue {
       typeof f.collection === "string" && f.collection.trim()
         ? f.collection.trim()
         : null,
+    nomStyliste: normalizeNomStyliste(f["nom (from nom_styliste)"]),
     couleurs: normalizeCouleurs(f.couleur),
     tags: normalizeTags(f.tag),
     sexe: typeof f.sexe === "string" && f.sexe.trim() ? f.sexe.trim() : null,
     statut: statutRaw,
     disponible,
-    // Routed through /api/img so next/image can actually optimize it.
-    image: croquis ? proxiedImageUrl(croquis) : null,
+    image: croquis ? optimizedImageUrl(croquis) : null,
   };
 }
 

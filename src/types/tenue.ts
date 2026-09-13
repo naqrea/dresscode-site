@@ -11,6 +11,7 @@ export interface Tenue {
   prix: number | null;
   prixAffiche: string;
   collection: string | null;
+  nomStyliste: string | null;
   couleurs: string[];
   tags: string[];
   sexe: string | null;

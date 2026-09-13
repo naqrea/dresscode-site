@@ -1,20 +1,11 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { ServiceCard } from "@/components/home/ServiceCard";
-import heroImage from "../../public/hero-image.png";
 
 export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-dc-white/10 px-4 py-24 sm:px-6 sm:py-64">
-        <Image
-          src={heroImage}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+
         <div aria-hidden="true" className="absolute inset-0 bg-dc-bg/50" />
         <div
           aria-hidden="true"

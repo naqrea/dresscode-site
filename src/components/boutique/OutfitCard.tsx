@@ -54,6 +54,11 @@ export function OutfitCard({ tenue, onSelect, priority, onImageSettled }: Outfit
         <h3 className="mt-1 font-heading text-base uppercase tracking-wide text-dc-white">
           {tenue.nom}
         </h3>
+        {tenue.nomStyliste && (
+          <p className="mt-1 font-sans text-xs text-dc-white/50">
+            Par {tenue.nomStyliste}
+          </p>
+        )}
         <p className="mt-1 font-sans text-sm text-dc-accent">{tenue.prixAffiche}</p>
       </div>
     </button>
